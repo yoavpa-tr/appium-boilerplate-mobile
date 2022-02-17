@@ -11,6 +11,14 @@ class etEmailVerificationPage extends AppScreen {
     get title() {
         return $('[automation-id="email-verification-got-email-title"]');
     }
+
+    get skipBtn() {
+      return $('[automation-id="email-verification-skip-link"]');
+    } 
+
+    async tapOnSkipBtn(){
+      await this.skipBtn.click();
+    }
 }
 
 export default new etEmailVerificationPage();

@@ -3,6 +3,7 @@ import etLoginPage from '../screenobjects/etLoginPage';
 import etLoggedInPage from '../screenobjects/etLoggedInPage';
 import etSignupPage from '../screenobjects/etSignupPage';
 import etEmailVerificationPage from '../screenobjects/etEmailVerificationPage';
+import etTrackingPermissionPage from '../screenobjects/etTrackingPermissionPage';
 import WebViewScreen from '../screenobjects/WebviewScreen';
 import { CONTEXT_REF } from '../helpers/WebView';
 
@@ -37,6 +38,16 @@ describe('WebdriverIO and Appium, when interacting with a login form,', () => {
         await etSignupPage.submitSignup({username: username, email: email, password: password});
 
         await etEmailVerificationPage.waitForIsShown(true);
-        await expect(etEmailVerificationPage.title).toBeExisting();
+        await etEmailVerificationPage.tapOnSkipBtn();
+
+        await etTrackingPermissionPage.waitForIsShown(true);
+        await etTrackingPermissionPage.tapOnContinueBtn();
+
+        // close Account Setup Page
+        await $('.learn-more').waitForDisplayed();
+        await $('.icon-close').click();
+        
+        await etLoggedInPage.waitForIsShown(true);
+        await expect(etLoggedInPage.sideMenu).toBeExisting();
     });
 });
